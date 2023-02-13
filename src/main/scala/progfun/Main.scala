@@ -3,7 +3,7 @@ package progfun
 import Modelisation.{Point, Position, Tondeuse}
 import Parser.InputParser
 import com.typesafe.config.{Config, ConfigFactory}
-import Sortie.{OutputClass}
+import Sortie.OutputClass
 
 object Main extends App {
 
@@ -41,15 +41,21 @@ object Main extends App {
     positionDebutTondeuse1,
     instructionsTondeuse1.toList,
     positionDebutTondeuse1
-  )
+  ).run(instructionsTondeuse1.toList)
+
+  println("position Debut tondeuse 1 = " + tondeuse1.positionDebut.toString)
+  println("position Arrivee tondeuse 1 = " + tondeuse1.positionArrivee.toString)
 
   val tondeuse2 = Tondeuse(
     positionDebutTondeuse2,
     instructionsTondeuse2.toList,
     positionDebutTondeuse2
-  )
+  ).run(instructionsTondeuse2.toList)
 
-  val jsonOutput = OutputClass(limite, List(tondeuse1, tondeuse2))
-  jsonOutput.serialize()
+  println("position Debut Tondeuse 2 = " + tondeuse2.positionDebut.toString)
+  println("position Arrivee tondeuse 2 = " + tondeuse2.positionArrivee.toString)
 
+  val outputClass = OutputClass(limite, List(tondeuse1, tondeuse2))
+  println("output JSON = " + outputClass.toJson)
+  println("output CSV = " + outputClass.toCsv)
 }
