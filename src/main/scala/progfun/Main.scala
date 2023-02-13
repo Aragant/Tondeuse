@@ -1,39 +1,55 @@
-package fr.esgi.al.funprog
+package progfun
 
+import Modelisation.{Point, Position, Tondeuse}
+import Parser.InputParser
 import com.typesafe.config.{Config, ConfigFactory}
-import fr.esgi.al.funprog.Hello.Greeting
-import progfun.Input_Output.InputParser
+import Sortie.{OutputClass}
 
-import scala.io.StdIn
-
-object Hello extends Greeting with App {
-  println(":> Enter your name: ")
-  val user = StdIn.readLine()
-  println(s":> $greeting $user")
+object Main extends App {
 
   val conf: Config = ConfigFactory.load()
-  val message: String = conf.getString("example.message")
-  println(s":> message: $message")
-  val one: Int = conf.getInt("example.one")
-  println(s":> one: ${one.toString}")
-  val yes: Boolean = conf.getBoolean("example.yes")
-  println(s":> yes: ${yes.toString}")
 
-  val lines = InputParser.getFileLine(
-    "src/main/scala/progfun/Input_Output/texteInput.txt"
-  )
+  val filePath = "src/main/resources/texteInput.txt"
+  val lines = InputParser.getFileLine(filePath)
   lines.foreach { line =>
     println(line)
   }
 
-  trait Greeting {
-    lazy val greeting: String = "hello"
+  val limite: Point =
+    Point(lines(0)(0).toString.toInt, lines(0)(1).toString.toInt)
+  println(limite.toString)
 
-    case class MyException(msg: String) extends Exception
+  val positionDebutTondeuse1: Position = Position(
+    Point(lines(1)(0).toString.toInt, lines(1)(1).toString.toInt),
+    lines(1)(2).toString.charAt(0)
+  )
+  println(positionDebutTondeuse1.toString)
 
-    @SuppressWarnings(Array("org.wartremover.warts.Throw"))
-    def dangerous(): Unit = {
-      throw new MyException("boooom")
-    }
-  }
+  val instructionsTondeuse1: String = lines(2)
+  println(instructionsTondeuse1)
+
+  val positionDebutTondeuse2: Position = Position(
+    Point(lines(3)(0).toString.toInt, lines(3)(1).toString.toInt),
+    lines(3)(2).toString.charAt(0)
+  )
+  println(positionDebutTondeuse2.toString)
+
+  val instructionsTondeuse2: String = lines(4)
+  println(instructionsTondeuse2)
+
+  val tondeuse1 = Tondeuse(
+    positionDebutTondeuse1,
+    instructionsTondeuse1.toList,
+    positionDebutTondeuse1
+  )
+
+  val tondeuse2 = Tondeuse(
+    positionDebutTondeuse2,
+    instructionsTondeuse2.toList,
+    positionDebutTondeuse2
+  )
+
+  val jsonOutput = OutputClass(limite, List(tondeuse1, tondeuse2))
+  jsonOutput.serialize()
+
 }

@@ -5,7 +5,7 @@ import scala.io.StdIn
 import com.typesafe.config.{Config, ConfigFactory}
 
 // Lancer l'exemple avec: sbt "runMain example.Hello"
-/*object Hello extends Greeting with App {
+object Hello extends Greeting with App {
   println(":> Enter your name: ")
   val user = StdIn.readLine()
   println(s":> $greeting $user")
@@ -29,4 +29,3 @@ trait Greeting {
     throw new MyException("boooom")
   }
 }
- */
