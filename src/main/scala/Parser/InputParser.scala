@@ -16,11 +16,13 @@ object InputParser {
       .grouped(2)
       .map {
         case List(position, instructions) =>
-          val positionTondeuse = Position(
+          val positionTondeuse: Position = Position(
             Point(position(0).toString.toInt, position(1).toString.toInt),
             position(2).toString.charAt(0)
           )
-          Tondeuse(positionTondeuse, instructions.toList, positionTondeuse)
+          Tondeuse(positionTondeuse, instructions.toList, positionTondeuse).run(
+            instructions.toList
+          )
       }
       .toList
     tondeuse

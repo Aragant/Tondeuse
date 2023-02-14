@@ -19,4 +19,5 @@ object Main extends App {
   val outputClass = OutputClass(limite, tondeuses)
   outputClass.writeJson(conf.getString("application.output-json-file"))
   outputClass.writeCsv(conf.getString("application.output-csv-file"))
+  outputClass.writeYAML(conf.getString("application.output-yaml-file"))
 }
